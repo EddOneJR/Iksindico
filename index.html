@@ -127,7 +127,7 @@ nav{display:flex;align-items:center;padding:0 28px;height:64px;border-bottom:1px
   </div>
 </div>
 <script>
-var history = [];
+var chatHistory = [];
 
 var IK = '<div class="ik-card"><strong>💼 InfoKings pode ajudar:</strong> Fornecemos relógios de ponto biométricos e de reconhecimento facial (venda ou locação) e o sistema <strong>IKPontoWeb</strong> — que automatiza o controle de jornada, horas extras, banco de horas e gera a folha pronta para a contabilidade.<br><span style="font-size:12px;color:rgba(255,255,255,0.45);">📞 <a href="https://wa.me/552122214155" target="_blank">(21) 2221-4155</a> &nbsp;·&nbsp; <a href="https://infokings.com.br" target="_blank">infokings.com.br</a></span></div>';
 
@@ -196,14 +196,14 @@ async function send(text) {
   if(!text.trim()) return;
   document.getElementById("btn").disabled=true;
   add("user", text, false);
-  history.push({role:"user",content:text});
+  chatHistory.push({role:"user",content:text});
 
   var resp = encontrar(text);
   if(resp) {
     typing(true);
     setTimeout(function(){
       typing(false);
-      history.push({role:"assistant",content:resp});
+      chatHistory.push({role:"assistant",content:resp});
       add("assistant", resp, true);
       document.getElementById("btn").disabled=false;
       document.getElementById("inp").focus();
@@ -213,11 +213,11 @@ async function send(text) {
 
   typing(true);
   try {
-    var res = await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-3-haiku-20240307",max_tokens:1500,system:SYSTEM,messages:history})});
+    var res = await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-3-haiku-20240307",max_tokens:1500,system:SYSTEM,messages:chatHistory})});
     if(!res.ok){var e=await res.json().catch(function(){return{};});throw new Error(e.error?e.error.message:"Erro "+res.status);}
     var data=await res.json();
     var reply=data.content&&data.content[0]?data.content[0].text:"Sem resposta.";
-    history.push({role:"assistant",content:reply});
+    chatHistory.push({role:"assistant",content:reply});
     typing(false);
     add("assistant",fmt(reply),true);
   } catch(e) {
