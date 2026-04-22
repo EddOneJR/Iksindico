@@ -499,7 +499,7 @@ nav {
 </div>
 
 <script>
-const API_KEY = 'YOUR_API_KEY_HERE'; // Substitua pela sua chave da API Anthropic
+
 
 const SYSTEM = `Você é IKSíndico, assistente especializado em questões trabalhistas para síndicos de condomínios do Rio de Janeiro, desenvolvido pela InfoKings.
 
@@ -603,13 +603,10 @@ async function sendMessage(text) {
   showTyping();
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
@@ -636,7 +633,7 @@ async function sendMessage(text) {
     const isKey = e.message && e.message.toLowerCase().includes('api');
     renderMsg('assistant',
       isKey
-        ? `<strong>Configuração necessária</strong><br>Para utilizar o IKSíndico, é necessário inserir a chave da API Anthropic no código.<br><br>Abra o arquivo <em>iksindico.html</em>, localize a linha <code>const API_KEY = 'YOUR_API_KEY_HERE'</code> e substitua pelo seu token.<br><br>Obtenha sua chave em <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>`
+        ? `<strong>Configuração necessária</strong><br>Para utilizar o IKSíndico, é necessário inserir a chave da API Anthropic no código.<br><br>Abra o arquivo <em>iksindico.html</em>, localize a linha <code>
         : `<strong>Erro de conexão</strong><br>Não foi possível conectar ao servidor. Verifique sua internet e tente novamente.<br><em>Detalhe: ${e.message}</em>`,
       false
     );
