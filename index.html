@@ -197,11 +197,53 @@ function formatText(t) {
     .replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
 }
 
+const KB = {
+  "horas extras": "O porteiro tem direito a adicional sobre horas além da jornada normal.<br><br><strong>Adicionais:</strong><ul><li>Dias úteis/sábados: <strong>50%</strong></li><li>Domingos/feriados: <strong>100%</strong></li></ul><strong>Cálculo:</strong><ul><li>Hora = salário ÷ 220h</li><li>Ex: R$ 2.200 → hora = R$ 10 → extra 50% = <strong>R$ 15</strong></li></ul>Limite: 2h extras/dia (art. 59 CLT).<br><br><em>💡 Dica: Formalize com ponto e autorização por escrito.</em>",
+  "escala 12x36": "A escala 12×36 é a mais comum para porteiros no RJ (Convenção SINDEPRESTEM/SEAERJ).<br><br><strong>Como funciona:</strong><ul><li>Trabalha <strong>12h</strong> → descansa <strong>36h</strong></li><li>Repete independente de domingos/feriados</li><li>Jornada mensal: ~180h</li></ul><strong>Intervalo obrigatório:</strong> 1h intrajornada (art. 71 CLT). Se não concedido, paga-se 1h extra + 50%.<br>Domingos/feriados: sem adicional extra — descanso de 36h compensa (Súmula 444 TST).<br><br><em>💡 Dica: Escala assinada + aviso de 48h para alterações.</em>",
+  "intervalos": "Intervalos são obrigatórios e não podem ser suprimidos.<br><br><strong>Intrajornada (art. 71 CLT):</strong><ul><li>Até 4h: sem intervalo</li><li>4h a 6h: mínimo <strong>15 min</strong></li><li>Acima de 6h: mínimo <strong>1 hora</strong></li></ul><strong>Interjornada (art. 66 CLT):</strong> mínimo <strong>11h</strong> entre jornadas.<br>Se não cumprido: paga-se o período como hora extra + 50%.<br><br><em>💡 Dica: Registre entrada/saída do intervalo no ponto.</em>",
+  "banco de horas": "Permite compensar horas extras com folgas em vez de pagamento.<br><br><strong>Prazos:</strong><ul><li>Acordo individual escrito: até <strong>6 meses</strong></li><li>Acordo coletivo: até <strong>1 ano</strong></li></ul><strong>Regras:</strong><ul><li>Formalizar por escrito antes do início</li><li>Horas em domingos/feriados: pagas em dobro, não entram no banco</li><li>Não compensadas no prazo: pagas com 50% adicional</li><li>Na rescisão: horas saldo são pagas como extras</li></ul><em>💡 Dica: Informe o saldo ao funcionário mensalmente.</em>",
+  "desconto": "O condomínio pode descontar atrasos e faltas injustificadas proporcionalmente.<br><br><strong>Cálculo:</strong><ul><li>Hora = salário ÷ 220 | Ex: R$ 2.200 → minuto = R$ 0,167</li><li>30min de atraso = <strong>R$ 5,00</strong> de desconto</li></ul><strong>Falta injustificada:</strong> desconta 1 dia + DSR da semana.<br><strong>Sem desconto:</strong> atestado médico, casamento (3 dias), falecimento (2 dias), doação de sangue (1 dia/ano).<br><br><em>💡 Dica: Exija atestado em até 48h. Sem prazo = falta injustificada.</em>",
+  "registro de ponto": "O registro de ponto protege o condomínio em ações trabalhistas.<br><br><strong>Formas aceitas (Portaria 671/2021):</strong><ul><li>REP-C: relógio eletrônico homologado</li><li>REP-P: sistema via app homologado</li><li>Folha manual assinada pelo empregado</li><li>Ponto por exceção: só variações (exige acordo coletivo)</li></ul>Deve constar: entrada, saída/retorno do intervalo e saída final.<br><strong>Guarda: 5 anos.</strong><br><br><em>💡 Dica: Nunca deixe folhas em branco para assinar depois — são inválidas na Justiça.</em>",
+  "adicional noturno": "Devido a quem trabalha entre <strong>22h e 5h</strong> (art. 73 CLT).<br><br><strong>Adicional: 20%</strong> sobre a hora diurna.<br>Hora noturna reduzida = <strong>52min 30s</strong> (não 60min).<br><br><strong>Cálculo:</strong><ul><li>R$ 2.200 ÷ 220 = R$ 10 → + 20% = <strong>R$ 12/hora noturna</strong></li></ul><em>💡 Dica: Hora extra noturna acumula: 50% (extra) + 20% (noturno).</em>",
+  "ferias": "30 dias de férias após 12 meses de trabalho (art. 129 CLT).<br><br><strong>Concessão:</strong> nos 12 meses seguintes. Se não concedidas, o valor <strong>dobra</strong>.<br><strong>Remuneração:</strong> salário + <strong>1/3 constitucional</strong><br>Ex: R$ 2.200 + R$ 733 = <strong>R$ 2.933</strong><br><strong>Pagamento:</strong> até 2 dias antes do início.<br>Pode parcelar em até 3 períodos (mínimo 14 dias em um deles).<br><br><em>💡 Dica: Notifique por escrito 30 dias antes e guarde o recibo.</em>",
+  "rescisao": "<strong>Sem justa causa (pelo condomínio):</strong><ul><li>Aviso prévio: 30 dias + 3 dias/ano (máx. 90)</li><li>Saldo de salário + férias + 1/3 + 13º proporcional</li><li>FGTS + multa de <strong>40%</strong> + seguro-desemprego</li></ul><strong>Pedido de demissão:</strong><ul><li>Aviso de 30 dias, saldo + férias + 13º</li><li>Sem multa FGTS e sem seguro-desemprego</li></ul><em>💡 Dica: Formalize com SEAERJ. Atraso = multa de 1 salário/dia.</em>",
+  "zelador": "Zelador residente tem regras especiais.<br><br><strong>Jornada:</strong> 8h/dia, 44h/semana. Acionamentos fora do horário são remunerados.<br>Sobreaviso: <strong>1/3 da hora</strong>. Trabalho efetivo: hora extra + 50%.<br><strong>Moradia:</strong> natureza salarial — compõe base de FGTS, INSS e férias.<br><br><em>💡 Dica: Formalize o valor da moradia no contrato como salário in natura.</em>"
+};
+
+function encontrarResposta(pergunta) {
+  const p = pergunta.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  if (p.includes('hora extra') || p.includes('calcular hora')) return KB['horas extras'];
+  if (p.includes('12x36') || p.includes('12 x 36') || p.includes('escala')) return KB['escala 12x36'];
+  if (p.includes('interval')) return KB['intervalos'];
+  if (p.includes('banco de hora')) return KB['banco de horas'];
+  if (p.includes('descont') || p.includes('atraso') || p.includes('falta')) return KB['desconto'];
+  if (p.includes('ponto') || p.includes('registro')) return KB['registro de ponto'];
+  if (p.includes('noturno') || p.includes('noturna')) return KB['adicional noturno'];
+  if (p.includes('ferias') || p.includes('ferias')) return KB['ferias'];
+  if (p.includes('rescis') || p.includes('demiss') || p.includes('demitir')) return KB['rescisao'];
+  if (p.includes('zelador') || p.includes('moradia')) return KB['zelador'];
+  return null;
+}
+
 async function sendMessage(text) {
   if (!text.trim()) return;
   document.getElementById('sendBtn').disabled = true;
   renderMsg('user', text, false);
   history.push({ role: 'user', content: text });
+
+  const respPronta = encontrarResposta(text);
+  if (respPronta) {
+    showTyping();
+    setTimeout(function() {
+      removeTyping();
+      history.push({ role: 'assistant', content: respPronta });
+      renderMsg('assistant', respPronta, true);
+      document.getElementById('sendBtn').disabled = false;
+      document.getElementById('msgInput').focus();
+    }, 700);
+    return;
+  }
+
   showTyping();
   try {
     const res = await fetch('/api/chat', {
@@ -217,7 +259,11 @@ async function sendMessage(text) {
     renderMsg('assistant', formatText(reply), true);
   } catch(e) {
     removeTyping();
-    renderMsg('assistant', '<strong>Erro de conexão</strong><br>' + e.message, false);
+    renderMsg('assistant',
+      'Sua pergunta vai além do banco de respostas rápidas e requer conexão com a IA.<br><br>' +
+      'Enquanto isso, experimente os atalhos no topo para os temas mais comuns:<br><br>' +
+      '<strong>Horas extras · Escala 12×36 · Intervalos · Banco de horas · Descontos · Registro de ponto · Adicional noturno</strong>',
+      false);
   }
   document.getElementById('sendBtn').disabled = false;
   document.getElementById('msgInput').focus();
