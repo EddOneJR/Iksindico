@@ -207,7 +207,7 @@ async function sendMessage(text) {
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-3-5-sonnet-20241022', max_tokens: 1500, system: SYSTEM, messages: history })
+      body: JSON.stringify({ model: 'claude-3-haiku-20240307', max_tokens: 1500, system: SYSTEM, messages: history })
     });
     if (!res.ok) { const e = await res.json().catch(function(){return{};}); throw new Error(e.error ? e.error.message : 'Erro '+res.status); }
     const data = await res.json();
