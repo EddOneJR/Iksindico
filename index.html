@@ -162,64 +162,92 @@ function normalizar(s) {
   return s.toLowerCase()
     .replace(/[àáâãä]/g,"a").replace(/[èéêë]/g,"e")
     .replace(/[ìíîï]/g,"i").replace(/[òóôõö]/g,"o")
-    .replace(/[ùúûü]/g,"u").replace(/ç/g,"c").replace(/ñ/g,"n");
+    .replace(/[ùúûü]/g,"u").replace(/ç/g,"c").replace(/ñ/g,"n")
+    .replace(/×/g,"x").replace(/[ºª°]/g,"").replace(/[^a-z0-9 ]/g," ").replace(/  +/g," ").trim();
 }
 
 function encontrar(p) {
   var t = normalizar(p);
+  // Split into individual words for partial matching
+  var words = t.split(/\s+/);
 
   // Expanded keyword map: each entry maps keywords to a topic key
   var MAP = [
-    [["hora extra","horas extras","hora a mais","horas a mais","calcular extra","extra porteiro","adicional hora","hora adicional","trabalho a mais","50%","100% hora","hora dobrada"], "horas extras"],
-    [["12x36","12 x 36","doze por trinta","escala porteiro","escala vigia","escala doze","jornada porteiro","turno porteiro","escala condominio","revezamento porteiro"], "escala"],
-    [["intervalo","descanso jornada","pausa","almoco","lanche obrigatorio","descanso trabalho","hora almoco","tempo descanso","intervalo intrajornada","interjornada","11 horas","11h entre"], "intervalos"],
-    [["banco de hora","banco hora","compensar hora","compensacao hora","folga hora","acumulo hora","saldo hora","hora compensada"], "banco de hora"],
-    [["desconto","descontar","atraso","falta injustificada","falta sem atestado","falta trabalho","desconto salario","cortar salario","descontar falta","descontar atraso","chegar atrasado","funcionario atrasado","atrasado","atraso funcionario","desconto atraso","minutos atraso","hora atraso"], "descont"],
-    [["ponto","registro ponto","bater ponto","relogio ponto","controle ponto","marcacao ponto","folha ponto","registrar funcionario","como registrar"], "ponto"],
-    [["noturno","adicional noturno","trabalho noite","hora noite","22h","turno noturno","virada noturna","jornada noturna","hora noturna"], "noturno"],
-    [["ferias","gozo ferias","tirar ferias","direito ferias","ferias funcionario","ferias porteiro","ferias zelador","periodo ferias","calculo ferias"], "feria"],
-    [["rescisao","demissao","demitir","dispensar funcionario","encerrar contrato","desligar funcionario","romper contrato","aviso rescisao","calcular rescisao","acerto rescisao"], "rescis"],
-    [["zelador","zelador residente","zelador mora","moradia zelador","apartamento zelador","zelador condominio","funcao zelador"], "zelador"],
-    [["13 salario","decimo terceiro","13o","13°","gratificacao natal","salario natal","calcular 13","pagar 13"], "13"],
-    [["garagista","garagem","estacionamento funcionario","controlador vaga","operador estacionamento"], "garagista"],
-    [["faxineiro","faxina","limpeza condominio","servente","zeladora limpeza","auxiliar limpeza","diarista condominio"], "faxin"],
-    [["inss","fgts","previdencia","contribuicao","recolhimento","encargo trabalhista","encargo condominio","gps","guia previdencia"], "inss"],
-    [["atestado","atestado medico","licenca medica","afastamento","medico funcionario","cid","consulta medica","licenca saude","afastar funcionario"], "atestado"],
-    [["aviso previo","aviso demissao","prazo demissao","prazo saida","cumprir aviso","pagar aviso","aviso trabalhado","aviso indenizado"], "aviso"],
-    [["feriado","trabalho feriado","feriado rj","feriado rio","sao sebastiao","sao jorge","consciencia negra","feriado nacional","feriado municipal","feriado condominio"], "feriado"],
-    [["uniforme","epi","equipamento protecao","roupa trabalho","fardamento","vestimenta funcionario","equipamento seguranca","protecao funcionario"], "uniforme"],
-    [["convencao coletiva","sindeprestem","seaerj","acordo coletivo","sindicato condominio","convencao rj","convencao trabalhadores","norma coletiva"], "convencao"],
-    [["justa causa","demissao justa causa","motivo demissao","falta grave","ato falta","demitir com justa","dispensar justa causa","justa causa motivo"], "justa causa"],
-    [["estabilidade","gestante","gravida","acidente trabalho","cipeiro","dirigente sindical","nao pode demitir","funcionario protegido","estabilidade emprego"], "estabilidade"],
-    [["vale transporte","vale refeicao","vale alimentacao","vt","vr","va","beneficio funcionario","ticket refeicao","ticket alimentacao","cesta basica"], "vale.transporte"],
-    [["salario minimo","piso salarial","piso categoria","minimo porteiro","minimo zelador","salario base","salario minimo rj","quanto pagar"], "salario minimo"],
-    [["sobreaviso","prontidao","disponibilidade","aguardando chamado","plantao","escala sobreaviso","celular disponivel","sobreaviso zelador"], "sobreaviso"],
-    [["domingo","dsr","descanso semanal","folga semanal","remunerado descanso","dia folga","trabalho domingo","domingo dobrado"], "domingo"],
-    [["equiparacao salarial","isonomia","mesmo salario","salario igual","diferenca salario","discriminacao salario","pagar igual"], "equiparacao"],
-    [["experiencia","contrato experiencia","periodo experiencia","90 dias","prazo experiencia","admissao experiencia","novo funcionario","contratacao"], "contrato de experiencia"],
-    [["multa atraso","atraso pagamento","atraso salario","multa salario","multa rescisao","prazo pagamento","pagar em dia","multa 477","multa 467"], "multa atraso"],
-    [["ponto excecao","excecao ponto","so variacao","variacao jornada","ponto simplificado","registro excecao"], "ponto por excecao"],
-    [["rep-c","repc","rep c","relogio fisico","relogio homologado","equipamento ponto","relógio biometrico","facial ponto","biometria ponto"], "rep.c"],
-    [["portaria 671","portaria do mte","portaria ministerio","671","legislacao ponto","lei ponto","norma ponto","regulamento ponto"], "portaria 671"],
-    [["espelho ponto","espelho de ponto","folha mensal","relatorio ponto","comprovante jornada","resumo ponto","fechamento ponto","espelho mensal"], "espelho de ponto"],
-    [["6x1","seis por um","6 por 1","escala 6x1","seis dias","trabalha seis","jornada 6x1"], "escala 6x1"],
-    [["compensacao jornada","compensar jornada","banco semanal","compensacao semanal","distribuir horas","flexibilizar jornada","hora a compensar"], "compensacao de jornada"],
+    [["hora extra","horas extras","hora a mais","horas a mais","extra porteiro","hora adicional","trabalho a mais","50 por cento hora","hora dobrada","calcular extra","pagamento extra","extra hora"], "horas extras"],
+    [["12x36","12 x 36","doze por trinta","escala porteiro","escala vigia","escala doze","jornada porteiro","turno porteiro","escala condominio","revezamento porteiro","doze trinta e seis"], "escala|12x36"],
+    [["intervalo","descanso jornada","pausa trabalho","almoco funcionario","lanche obrigatorio","descanso trabalho","hora almoco","tempo descanso","intrajornada","interjornada","11 horas","11h entre","pausa obrigatoria"], "interval"],
+    [["banco de hora","banco hora","compensar hora","compensacao hora","folga hora","acumulo hora","saldo hora","hora compensada","horas acumuladas"], "banco de hora"],
+    [["desconto","descontar","atraso","atrasado","falta injustificada","falta sem atestado","falta trabalho","desconto salario","cortar salario","descontar falta","chegar atrasado","minutos atrasado","funcionario atrasado","porteiro atrasado"], "descont|atraso"],
+    [["ponto","registro ponto","bater ponto","relogio ponto","controle ponto","marcacao ponto","folha ponto","registrar funcionario","como registrar","ponto eletronico","marcar ponto"], "ponto|registro|relogio"],
+    [["noturno","adicional noturno","trabalho noite","hora noite","22h","turno noturno","virada noturna","jornada noturna","hora noturna","trabalho madrugada"], "noturno"],
+    [["ferias","gozo ferias","tirar ferias","direito ferias","ferias funcionario","ferias porteiro","ferias zelador","periodo ferias","calculo ferias","agendar ferias"], "feria"],
+    [["rescisao","demissao","demitir","dispensar funcionario","encerrar contrato","desligar funcionario","romper contrato","acerto rescisao","calcular rescisao","encerrar vinculo","calcular acerto"], "rescis|demiss|demitir"],
+    [["zelador","zelador residente","zelador mora","moradia zelador","apartamento zelador","zelador condominio","funcao zelador","zelador portaria"], "zelador|moradia"],
+    [["13 salario","decimo terceiro","13o","gratificacao natal","salario natal","calcular 13","pagar 13","decimo","natal salario","13 proporcional"], "13|decimo"],
+    [["garagista","garagem","estacionamento funcionario","operador estacionamento","vaga carro","controle vaga","funcionario garagem","garagista condominio"], "garagista|garagem"],
+    [["faxineiro","faxina","limpeza condominio","servente","auxiliar limpeza","zeladora limpeza","diarista","funcionario limpeza","empregado limpeza"], "faxin|servent|limpeza"],
+    [["inss","fgts","previdencia","contribuicao","recolhimento","encargo trabalhista","encargo condominio","gps","guia previdencia","fundo garantia","previdencia social"], "inss|fgts|previdencia"],
+    [["atestado","atestado medico","licenca medica","afastamento","medico funcionario","cid","consulta medica","licenca saude","afastar funcionario","funcionario doente","funcionario afastado"], "atestado|medic|licenca|afasta"],
+    [["aviso previo","aviso demissao","prazo demissao","prazo saida","cumprir aviso","pagar aviso","aviso trabalhado","aviso indenizado","aviso antecipado"], "aviso"],
+    [["feriado","trabalho feriado","feriado rj","feriado rio","sao sebastiao","sao jorge","consciencia negra","feriado nacional","feriado municipal","feriado condominio","trabalhar feriado"], "feriado"],
+    [["uniforme","epi","equipamento protecao","roupa trabalho","fardamento","vestimenta funcionario","equipamento seguranca","protecao funcionario","luva","bota trabalho"], "uniforme|epi|equipamento"],
+    [["convencao coletiva","sindeprestem","seaerj","acordo coletivo","sindicato condominio","convencao rj","norma coletiva","piso convencao","convencao trabalhadores"], "convencao|sindeprestem|seaerj"],
+    [["justa causa","demissao justa","falta grave","motivo demissao","demitir com justa","dispensar justa","abandono emprego","improbidade","insubordinacao","ato falta"], "justa causa|demissao por justa"],
+    [["estabilidade","gestante","gravida","acidente trabalho","cipeiro","dirigente sindical","nao pode demitir","funcionario protegido","estabilidade emprego","protecao emprego"], "estabilidade|gestante|acidente"],
+    [["vale transporte","vale refeicao","vale alimentacao","vt","beneficio funcionario","ticket refeicao","ticket alimentacao","cesta basica","alimentacao funcionario","vale funcionario"], "vale.transporte|vale.alimentac"],
+    [["salario minimo","piso salarial","piso categoria","piso porteiro","salario porteiro rj","quanto pagar porteiro","salario zelador rj","piso zelador","minimo porteiro","minimo zelador","salario base","quanto pagar","salario porteiro","salario zelador","piso rj"], "salario minimo|piso salarial|p"],
+    [["sobreaviso","prontidao","disponibilidade","aguardando chamado","plantao","escala sobreaviso","celular disponivel","acionado fora","disponivel chamado"], "sobreaviso|prontidao"],
+    [["domingo","dsr","descanso semanal","folga semanal","remunerado descanso","dia folga","trabalho domingo","domingo dobrado","folga domingo","descanso remunerado"], "domingo|dsr|descanso semanal"],
+    [["equiparacao salarial","isonomia","mesmo salario","salario igual","diferenca salario","discriminacao salario","pagar igual","equiparacao funcao"], "equiparacao salarial|isonomia"],
+    [["contrato experiencia","periodo experiencia","90 dias","prazo experiencia","admissao","novo funcionario","contratacao","contratar funcionario","experiencia funcionario","primeiro emprego"], "contrato de experiencia|experi"],
+    [["multa atraso","atraso pagamento","atraso salario","multa salario","multa rescisao","prazo pagamento","pagar em dia","multa rescisao","atraso pagamento salario","atraso acerto"], "multa atraso pagamento|atraso"],
+    [["ponto excecao","excecao ponto","so variacao","variacao jornada","ponto simplificado","registro excecao","ponto por excecao","registrar excecao"], "ponto por excecao|excecao"],
+    [["rep-c","repc","rep c","relogio fisico","relogio homologado","equipamento ponto","biometrico","facial ponto","biometria ponto","rep-p","repp","relogio biometrico","reconhecimento facial"], "rep.c|rep.p|diferenca rep|relo"],
+    [["portaria 671","671 mte","portaria ministerio","legislacao ponto","lei ponto","norma ponto","regulamento ponto","portaria trabalho","portaria 671 2021"], "portaria 671|portaria do mte|p"],
+    [["espelho ponto","espelho de ponto","folha mensal","relatorio ponto","comprovante jornada","resumo ponto","fechamento ponto","espelho mensal","espelho funcionario","folha ponto mensal"], "espelho de ponto|espelho|folha"],
+    [["6x1","seis por um","6 por 1","escala 6","jornada 6","seis dias trabalho","trabalha 6 dias","seis por 1","escala seis","jornada seis"], "escala 6x1|seis por um|jornada"],
+    [["compensacao jornada","compensar jornada","banco semanal","compensacao semanal","distribuir horas","flexibilizar jornada","hora compensar","compensar horas","jornada compensacao"], "compensacao de jornada|compens"],
   ];
+
 
   for (var m = 0; m < MAP.length; m++) {
     var keywords = MAP[m][0];
     var topicKey = MAP[m][1];
     for (var k = 0; k < keywords.length; k++) {
-      if (t.includes(keywords[k])) {
+      var kw = keywords[k];
+      // Match if full phrase found OR all words of keyword found in text
+      var kwWords = kw.split(" ");
+      var allFound = kwWords.every(function(w){ return t.includes(w); });
+      if (t.includes(kw) || allFound) {
         for (var i = 0; i < TOPICS.length; i++) {
-          var keys = TOPICS[i][0].split("|");
-          for (var j = 0; j < keys.length; j++) {
-            if (keys[j] === topicKey || TOPICS[i][0].includes(topicKey)) return TOPICS[i];
+          var tkeys = TOPICS[i][0].split("|");
+          for (var tk = 0; tk < tkeys.length; tk++) {
+            if (topicKey.includes(tkeys[tk]) || tkeys[tk].includes(topicKey.split("|")[0])) return TOPICS[i];
           }
         }
       }
     }
   }
+
+  // Last resort: try matching any single meaningful word (4+ chars) against topic keys
+  var stopwords = ["como","qual","quais","quando","onde","para","pelo","pela","pode","voce","meu","minha","meus","minhas","este","essa","isso","aqui","mais","menos","muito","pouco","agora","hoje","sempre","nunca","ainda","tambem","mesmo","cada","todo","toda","seus","suas","nosso","nossa","devo","devo","fazer","tenho","temos","deve","devem","preciso","precisa","seria","seria"];
+  for (var w = 0; w < words.length; w++) {
+    var word = words[w];
+    if (word.length < 4) continue;
+    if (stopwords.indexOf(word) >= 0) continue;
+    for (var m = 0; m < MAP.length; m++) {
+      var keywords = MAP[m][0];
+      for (var k = 0; k < keywords.length; k++) {
+        if (keywords[k].includes(word) || word.includes(keywords[k])) {
+          var topicKey = MAP[m][1];
+          for (var i = 0; i < TOPICS.length; i++) {
+            if (TOPICS[i][0].includes(topicKey)) return TOPICS[i];
+          }
+        }
+      }
+    }
+  }
+
   return null;
 }
 
