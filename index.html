@@ -3,118 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>IKSindico - Assistente Trabalhista</title>
+<title>IKSíndico — Assistente Trabalhista</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#040d1a;--blue-mid:#0d2a52;--blue-accent:#1a5fb4;--gold:#f5a623;--gold-light:#ffc55a;--white:#fff;--muted:rgba(255,255,255,0.55);--border:rgba(255,255,255,0.08);--glow:rgba(26,95,180,0.4)}
-html,body{height:100%;height:100dvh;background:var(--navy);color:var(--white);font-family:'Barlow',sans-serif;overflow:hidden;-webkit-text-size-adjust:100%}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 20%,rgba(26,95,180,0.18) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 10% 80%,rgba(26,95,180,0.12) 0%,transparent 60%);pointer-events:none;z-index:0}
-.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(26,95,180,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,95,180,0.06) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-.app{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;height:100dvh;max-width:1100px;margin:0 auto}
-nav{display:flex;align-items:center;padding:0 16px;height:56px;border-bottom:1px solid var(--border);background:rgba(4,13,26,0.95);backdrop-filter:blur(12px);flex-shrink:0;gap:8px}
-.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
-.logo-icon{width:32px;height:32px;flex-shrink:0}
-.logo-icon svg{width:32px;height:32px}
-.logo-text{font-family:'Exo 2',sans-serif;font-weight:800;font-size:18px;color:var(--white);letter-spacing:-0.3px}
-.logo-text span{color:var(--gold)}
-.nav-badge{font-size:9px;font-weight:700;font-family:'Exo 2',sans-serif;letter-spacing:1px;color:var(--gold);border:1px solid rgba(245,166,35,0.3);padding:2px 7px;border-radius:20px;text-transform:uppercase}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
-.online-dot{width:7px;height:7px;background:#4ade80;border-radius:50%;box-shadow:0 0 6px #4ade80;animation:pulse 2s infinite;flex-shrink:0}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.hero-strip{background:linear-gradient(90deg,var(--blue-mid) 0%,rgba(10,29,58,0.7) 100%);border-bottom:1px solid var(--glow);padding:10px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
-.hero-icon{width:38px;height:38px;background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.25);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hero-icon svg{width:19px;height:19px}
-.hero-text{flex:1;min-width:0}
-.hero-text h1{font-family:'Exo 2',sans-serif;font-size:13px;font-weight:700;color:var(--white);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hero-text p{font-size:10px;color:var(--muted);margin-top:1px}
-.chips-wrap{border-bottom:1px solid var(--border);padding:8px 16px;display:flex;gap:7px;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(245,166,35,0.5) rgba(255,255,255,0.05)}
-.chips-wrap::-webkit-scrollbar{height:4px}.chips-wrap::-webkit-scrollbar-track{background:rgba(255,255,255,0.05);border-radius:2px}.chips-wrap::-webkit-scrollbar-thumb{background:rgba(245,166,35,0.5);border-radius:2px}
-.chip{font-size:11px;font-weight:600;padding:6px 12px;border-radius:20px;border:1px solid var(--glow);color:rgba(255,255,255,0.75);background:rgba(26,95,180,0.18);white-space:nowrap;cursor:pointer;font-family:'Exo 2',sans-serif;flex-shrink:0;-webkit-tap-highlight-color:transparent}
-.chip:active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
-.chat-wrap{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;-webkit-overflow-scrolling:touch}
+:root{
+  --navy:#0f2d5e;
+  --navy2:#1a3f7a;
+  --navy3:#0a2040;
+  --orange:#f97316;
+  --orange2:#ea6c0d;
+  --orange-light:#fff3e8;
+  --white:#ffffff;
+  --bg:#f0f4fa;
+  --text:#1e2d40;
+  --text2:#4a5568;
+  --text3:#8a97a8;
+  --border:#dce6f0;
+  --card:#ffffff;
+  --radius:12px;
+  --shadow:0 2px 12px rgba(15,45,94,0.10);
+  --shadow-lg:0 8px 32px rgba(15,45,94,0.16);
+}
+html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;overflow:hidden;-webkit-text-size-adjust:100%}
+
+/* LAYOUT */
+.app{display:flex;flex-direction:column;height:100%;height:100dvh;max-width:900px;margin:0 auto;background:var(--white);box-shadow:var(--shadow-lg)}
+
+/* HEADER */
+header{display:flex;align-items:center;padding:0 20px;height:60px;background:var(--navy);flex-shrink:0;gap:12px;position:relative}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),#ffb347)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:34px;height:34px;flex-shrink:0}
+.logo-icon svg{width:34px;height:34px}
+.logo-name{font-weight:800;font-size:17px;color:var(--white);letter-spacing:-0.3px}
+.logo-name span{color:var(--orange)}
+.header-badge{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--orange);background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);padding:2px 8px;border-radius:20px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.status{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.6);font-weight:500}
+.status-dot{width:7px;height:7px;background:#22c55e;border-radius:50%;box-shadow:0 0 0 2px rgba(34,197,94,0.25);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* SUBHEADER */
+.subheader{background:var(--navy2);padding:10px 20px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.subheader-icon{width:32px;height:32px;background:rgba(249,115,22,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.subheader-icon svg{width:16px;height:16px}
+.subheader-text h2{font-size:12px;font-weight:700;color:var(--white);line-height:1.2}
+.subheader-text p{font-size:10px;color:rgba(255,255,255,0.5);margin-top:1px}
+
+/* CHIPS */
+.chips-wrap{border-bottom:1px solid var(--border);padding:10px 16px;display:flex;gap:7px;overflow-x:auto;flex-shrink:0;scrollbar-width:thin;scrollbar-color:rgba(249,115,22,0.4) transparent;-webkit-overflow-scrolling:touch;background:var(--white)}
+.chips-wrap::-webkit-scrollbar{height:3px}
+.chips-wrap::-webkit-scrollbar-thumb{background:rgba(249,115,22,0.4);border-radius:2px}
+.chip{font-size:11px;font-weight:700;padding:6px 13px;border-radius:20px;border:1.5px solid var(--border);color:var(--navy);background:var(--white);white-space:nowrap;cursor:pointer;transition:all 0.15s;font-family:'Nunito',sans-serif;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.chip:hover,.chip:active{background:var(--orange);color:var(--white);border-color:var(--orange);transform:translateY(-1px);box-shadow:0 3px 8px rgba(249,115,22,0.3)}
+
+/* CHAT */
+.chat-wrap{flex:1;overflow-y:auto;padding:20px 16px;display:flex;flex-direction:column;gap:16px;background:var(--bg);-webkit-overflow-scrolling:touch}
+.chat-wrap::-webkit-scrollbar{width:4px}
+.chat-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
 .msg{display:flex;gap:10px;animation:fadeUp 0.2s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .msg.user{flex-direction:row-reverse}
-.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Exo 2',sans-serif;font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px}
-.av.ai{background:linear-gradient(135deg,var(--blue-accent),#0d2a52);border:1px solid rgba(26,95,180,0.5);color:#fff}
-.av.uv{background:linear-gradient(135deg,var(--gold),#d4860d);color:var(--navy)}
-.bubble{max-width:82%;padding:11px 14px;border-radius:14px;font-size:14px;line-height:1.6}
-.msg.ai .bubble{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-top-left-radius:4px;color:rgba(255,255,255,0.9)}
-.msg.user .bubble{background:var(--blue-accent);border:1px solid rgba(26,95,180,0.5);border-top-right-radius:4px;color:#fff}
-.btag{display:inline-block;font-size:10px;font-weight:600;font-family:'Exo 2',sans-serif;letter-spacing:0.5px;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-bottom:7px;background:rgba(245,166,35,0.15);color:var(--gold-light);border:1px solid rgba(245,166,35,0.2)}
-.bubble strong{font-weight:600;color:var(--gold-light)}
-.bubble em{color:rgba(255,255,255,0.65);font-style:italic}
-.bubble ul{padding-left:16px;margin-top:5px;display:flex;flex-direction:column;gap:3px}
-.bubble li{font-size:13.5px;color:rgba(255,255,255,0.85)}
-.bubble a{color:var(--gold-light)}
-.ik-card{margin-top:12px;padding:10px 12px;background:rgba(245,166,35,0.07);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:12px;color:rgba(255,255,255,0.7);line-height:1.6}
-.ik-card strong{color:var(--gold)}
-.ik-card a{color:var(--gold);text-decoration:none}
-.typing-bubble{display:flex;gap:5px;padding:12px 14px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:14px;border-top-left-radius:4px;width:fit-content}
-.tdot{width:6px;height:6px;background:rgba(255,255,255,0.35);border-radius:50%;animation:tdot 1.3s infinite ease-in-out}
+
+.av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;flex-shrink:0;margin-top:2px}
+.av.ai{background:var(--navy);color:var(--white)}
+.av.uv{background:var(--orange);color:var(--white)}
+
+.bubble{max-width:80%;padding:12px 16px;border-radius:16px;font-size:13.5px;line-height:1.65;font-family:'Nunito',sans-serif}
+.msg.ai .bubble{background:var(--white);border:1px solid var(--border);border-top-left-radius:4px;color:var(--text);box-shadow:var(--shadow)}
+.msg.user .bubble{background:var(--navy);border-top-right-radius:4px;color:var(--white);box-shadow:var(--shadow)}
+
+.btag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:8px;background:var(--orange-light);color:var(--orange);border:1px solid rgba(249,115,22,0.2)}
+.bubble strong{font-weight:700;color:var(--navy)}
+.msg.user .bubble strong{color:rgba(255,255,255,0.9)}
+.bubble em{color:var(--text2);font-style:italic}
+.msg.user .bubble em{color:rgba(255,255,255,0.7)}
+.bubble ul{padding-left:16px;margin-top:6px;display:flex;flex-direction:column;gap:3px}
+.bubble li{font-size:13px;color:var(--text)}
+.msg.user .bubble li{color:rgba(255,255,255,0.9)}
+.bubble a{color:var(--orange);font-weight:600}
+.msg.user .bubble a{color:#ffb347}
+
+/* InfoKings card */
+.ik-card{margin-top:12px;padding:11px 14px;background:linear-gradient(135deg,#fff8f3,#fff3e8);border-left:3px solid var(--orange);border-radius:0 10px 10px 0;font-size:12px;color:var(--text2);line-height:1.6}
+.ik-card strong{color:var(--orange2);font-weight:700}
+.ik-card a{color:var(--orange);font-weight:700;text-decoration:none}
+.ik-card a:hover{text-decoration:underline}
+.ik-card .ik-contact{font-size:11px;color:var(--text3);margin-top:4px}
+
+/* Typing */
+.typing-bubble{display:flex;gap:5px;padding:12px 14px;background:var(--white);border:1px solid var(--border);border-radius:16px;border-top-left-radius:4px;width:fit-content;box-shadow:var(--shadow)}
+.tdot{width:6px;height:6px;background:var(--text3);border-radius:50%;animation:tdot 1.3s infinite ease-in-out}
 .tdot:nth-child(2){animation-delay:0.2s}.tdot:nth-child(3){animation-delay:0.4s}
-@keyframes tdot{0%,60%,100%{transform:translateY(0);background:rgba(255,255,255,0.3)}30%{transform:translateY(-5px);background:var(--gold)}}
-.input-section{flex-shrink:0;border-top:1px solid var(--border);background:rgba(4,13,26,0.97);padding:10px 16px 12px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);background:var(--text3)}30%{transform:translateY(-5px);background:var(--orange)}}
+
+/* INPUT */
+.input-section{flex-shrink:0;border-top:1px solid var(--border);background:var(--white);padding:12px 16px 14px;padding-bottom:max(14px,env(safe-area-inset-bottom))}
 .input-row{display:flex;gap:8px;align-items:flex-end}
-.input-row textarea{flex:1;resize:none;border:1px solid rgba(26,95,180,0.35);border-radius:12px;padding:10px 14px;color:var(--white);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.45;background:rgba(255,255,255,0.06);outline:none;max-height:110px;-webkit-appearance:none}
-.input-row textarea::placeholder{color:rgba(255,255,255,0.28)}
-.input-row textarea:focus{border-color:var(--blue-accent)}
-.send-btn{width:44px;height:44px;min-width:44px;background:var(--gold);border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
-.send-btn:active{background:var(--gold-light);transform:scale(0.95)}
-.send-btn:disabled{opacity:0.35}
+.input-row textarea{flex:1;resize:none;border:1.5px solid var(--border);border-radius:12px;padding:10px 14px;color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;line-height:1.45;background:var(--bg);outline:none;max-height:110px;transition:border-color 0.2s;-webkit-appearance:none}
+.input-row textarea::placeholder{color:var(--text3)}
+.input-row textarea:focus{border-color:var(--orange);background:var(--white)}
+.send-btn{width:44px;height:44px;min-width:44px;background:var(--orange);border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent;transition:all 0.15s;box-shadow:0 3px 10px rgba(249,115,22,0.3)}
+.send-btn:hover{background:var(--orange2);transform:translateY(-1px);box-shadow:0 5px 14px rgba(249,115,22,0.4)}
+.send-btn:active{transform:scale(0.95)}
+.send-btn:disabled{opacity:0.4;cursor:default;transform:none;box-shadow:none}
 .send-btn svg{width:17px;height:17px}
-.disclaimer{margin-top:6px;font-size:10px;color:rgba(255,255,255,0.2);text-align:center}
+.disclaimer{margin-top:6px;font-size:10px;color:var(--text3);text-align:center;line-height:1.4}
+
+/* Welcome card */
+.welcome-topics{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.welcome-topic{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--orange-light);color:var(--orange);border:1px solid rgba(249,115,22,0.2)}
+
+@media(max-width:600px){
+  .app{max-width:100%}
+  .bubble{max-width:88%;font-size:13px}
+  .chips-wrap{padding:8px 12px}
+  header{padding:0 14px}
+}
 </style>
 </head>
 <body>
-<div class="grid-bg"></div>
 <div class="app">
-<nav>
-<a class="logo" href="#">
-<div class="logo-icon">
-<svg viewBox="0 0 36 36" fill="none">
-<circle cx="18" cy="18" r="17" stroke="#1a5fb4" stroke-width="1.5"/>
-<circle cx="18" cy="18" r="11" stroke="#f5a623" stroke-width="1" stroke-dasharray="3 2"/>
-<circle cx="18" cy="18" r="5" fill="#f5a623" opacity="0.9"/>
-<path d="M18 4 Q24 10 18 18 Q12 10 18 4Z" fill="#1a5fb4" opacity="0.5"/>
-</svg>
-</div>
-<div class="logo-text">IK<span>Síndico</span></div>
-</a>
-<div class="nav-badge">Beta</div>
-<div class="nav-right"><div class="online-dot"></div><span>IA online</span></div>
-</nav>
-<div class="hero-strip">
-<div class="hero-icon">
-<svg viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="1.8" stroke-linecap="round">
-<rect x="3" y="4" width="18" height="18" rx="2"/>
-<line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
-<line x1="3" y1="10" x2="21" y2="10"/>
-<path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
-</svg>
-</div>
-<div class="hero-text">
-<h1>Assistente Trabalhista — Controle de Ponto</h1>
-<p>CLT · Convenção Coletiva RJ (SINDEPRESTEM/SEAERJ) · Condomínios</p>
-</div>
-</div>
-<div class="chips-wrap" id="chips"></div>
-<div class="chat-wrap" id="chat"></div>
-<div class="input-section">
-<div class="input-row">
-<textarea id="inp" rows="1" placeholder="Digite sua dúvida trabalhista..." onkeydown="K(event)" oninput="Rz(this)"></textarea>
-<button class="send-btn" id="btn" onclick="S()">
-<svg viewBox="0 0 24 24" fill="none" stroke="#040d1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-</svg>
-</button>
-</div>
-<div class="disclaimer">IKSíndico oferece orientação informativa. Consulte um advogado para casos específicos. | InfoKings © 2025</div>
-</div>
+
+  <header>
+    <a class="logo" href="#">
+      <div class="logo-icon">
+        <svg viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <path d="M18 6 C10 6 6 11 6 18 C6 25 10 30 18 30 C26 30 30 25 30 18 C30 11 26 6 18 6Z" fill="none" stroke="rgba(249,115,22,0.6)" stroke-width="1"/>
+          <circle cx="18" cy="18" r="5" fill="#f97316"/>
+          <circle cx="18" cy="10" r="2.5" fill="rgba(249,115,22,0.8)"/>
+          <circle cx="25" cy="22" r="2.5" fill="rgba(249,115,22,0.6)"/>
+          <circle cx="11" cy="22" r="2.5" fill="rgba(249,115,22,0.6)"/>
+        </svg>
+      </div>
+      <div class="logo-name">IK<span>Síndico</span></div>
+    </a>
+    <div class="header-badge">Beta</div>
+    <div class="header-right">
+      <div class="status"><div class="status-dot"></div><span>IA online</span></div>
+    </div>
+  </header>
+
+  <div class="subheader">
+    <div class="subheader-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round">
+        <rect x="3" y="4" width="18" height="18" rx="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+    </div>
+    <div class="subheader-text">
+      <h2>Assistente Trabalhista — Controle de Ponto</h2>
+      <p>CLT · Convenção Coletiva RJ (SINDEPRESTEM/SEAERJ) · Condomínios</p>
+    </div>
+  </div>
+
+  <div class="chips-wrap" id="chips"></div>
+  <div class="chat-wrap" id="chat"></div>
+
+  <div class="input-section">
+    <div class="input-row">
+      <textarea id="inp" rows="1" placeholder="Digite sua dúvida trabalhista..." onkeydown="K(event)" oninput="Rz(this)"></textarea>
+      <button class="send-btn" id="btn" onclick="S()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="disclaimer">IKSíndico oferece orientação informativa. Consulte um advogado para casos específicos. | InfoKings © 2025</div>
+  </div>
+
 </div>
 <script>
+
 var chatHistory = [];
 var IK = '<div class="ik-card"><strong>💼 InfoKings pode ajudar:</strong> Fornecemos relógios de ponto <strong>biométricos e faciais</strong> (venda ou locação) e o <strong>IKPontoWeb</strong> - automatiza horas extras, banco de horas e gera a folha pronta para a contabilidade.<br><span style="font-size:11px;color:rgba(255,255,255,0.4)">📞 <a href="https://wa.me/552122214155" target="_blank">(21) 2221-4155</a> &nbsp;·&nbsp; <a href="https://infokings.com.br" target="_blank">infokings.com.br</a></span></div>';
 var IKP = '<div class="ik-card"><strong>💼 InfoKings é especialista nisso:</strong> Há 24 anos fornecemos relógios de ponto <strong>biométricos e faciais</strong> (venda ou locação) e o <strong>IKPontoWeb</strong> - 100% online, trata marcações, gera espelho de ponto, controla banco de horas e exporta para sua folha. Portaria 671/2021.<br><span style="font-size:11px;color:rgba(255,255,255,0.4)">📞 <a href="https://wa.me/552122214155" target="_blank">(21) 2221-4155</a> &nbsp;·&nbsp; <a href="https://infokings.com.br" target="_blank">infokings.com.br</a></span></div>';
@@ -322,15 +387,14 @@ async function send(text) {
   } catch(e) {
     typing(false);
     add("assistant",
-  "Não encontrei uma resposta pronta para essa dúvida no meu banco de conhecimento.<br><br>" +
-  "Para questões mais específicas ou personalizadas, a equipe da <strong>InfoKings</strong> pode ajudar:<br><br>" +
-  "<div class=\"ik-card\">" +
-  "<strong>💬 Fale com nosso suporte:</strong><br>" +
-  "📞 <a href=\"https://wa.me/552122214155\" target=\"_blank\"><strong>(21) 2221-4155</strong></a> — WhatsApp disponível<br>" +
-  "🌐 <a href=\"https://infokings.com.br\" target=\"_blank\">infokings.com.br</a><br><br>" +
-  "<span style=\"font-size:11px;color:rgba(255,255,255,0.5)\">Ou tente reformular sua pergunta usando palavras-chave como: " +
-  "<em>horas extras, escala 12x36, banco de horas, justa causa, atestado, rescisão, ponto...</em></span>" +
-  "</div>",
+  "Não encontrei uma resposta pronta para essa dúvida.<br><br>" +
+  "Para questões mais específicas, fale com a equipe da <strong>InfoKings</strong>:" +
+  '<div class="ik-card">' +
+  '<strong>💬 Fale com nosso suporte:</strong><br>' +
+  '📞 <a href="https://wa.me/552122214155" target="_blank"><strong>(21) 2221-4155</strong></a> — WhatsApp disponível<br>' +
+  '🌐 <a href="https://infokings.com.br" target="_blank">infokings.com.br</a>' +
+  '<div class="ik-contact">Ou tente palavras-chave como: <em>horas extras, escala 12x36, banco de horas, justa causa, atestado, rescisão, ponto</em></div>' +
+  '</div>',
   false);
   }
   document.getElementById("btn").disabled = false;
@@ -355,6 +419,7 @@ add("assistant",
   "Olá! Sou o <strong>IKSíndico</strong>, assistente especializado em questões trabalhistas para condomínios no Rio de Janeiro, desenvolvido pela <strong>InfoKings</strong>.<br><br>" +
   "Tenho respostas prontas sobre <strong>19 temas</strong>. Deslize os atalhos acima ou digite sua dúvida!",
   false);
+
 </script>
 </body>
 </html>
